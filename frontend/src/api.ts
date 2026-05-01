@@ -3,8 +3,7 @@ import axios from 'axios';
 const api = axios.create({
   // Use VITE_API_URL if set, otherwise detect if we are in production (Vercel)
   // based on the vercel.json routePrefix '/_/backend'
-  baseURL: import.meta.env.VITE_API_URL || 
-           (import.meta.env.PROD ? '/_/backend' : 'http://127.0.0.1:8000'),
+  baseURL: import.meta.env.VITE_API_URL ,
   headers: {
     'Content-Type': 'application/json',
   },
