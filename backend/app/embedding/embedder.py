@@ -1,20 +1,25 @@
-import logging
-from langchain_community.embeddings import HuggingFaceEmbeddings
+import os
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from dotenv import load_dotenv
 
-logger = logging.getLogger(__name__)
+load_dotenv()
 
-# Cache the embedder instance to avoid reloading it constantly
+# Cache the embedder instance
 _embedder_instance = None
 
-def get_embedder() -> HuggingFaceEmbeddings:
+def get_embedder() -> GoogleGenerativeAIEmbeddings:
     """
-    Returns an instance of the HuggingFaceEmbeddings model using sentence-transformers.
-    Model 'all-MiniLM-L6-v2' is small, fast, and highly effective for general purpose RAG.
+    Returns an instance of GoogleGenerativeAIEmbeddings.
+    This uses an API call and consumes negligible RAM compared to local models.
     """
     global _embedder_instance
     if _embedder_instance is None:
-        logger.info("Initializing HuggingFaceEmbeddings model (all-MiniLM-L6-v2)...")
-        # You can change the model name to any other compatible sentence-transformer model
-        _embedder_instance = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+        api_key = os.getenv("GOOGLE_API_KEY")
+        if not api_key:
+            raise ValueError("GOOGLE_API_KEY not found in environment variables")
+            
+        _embedder_instance = GoogleGenerativeAIEmbeddings(
+            model="models/embedding-001",
+            google_api_key=api_key
+        )
     return _embedder_instance

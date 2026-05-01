@@ -2,19 +2,18 @@ services:
   - type: web
     name: highwatch-backend
     runtime: python
+    plan: free # Explicitly setting the free tier
     rootDir: backend
     buildCommand: "pip install -r requirements.txt"
     startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
     envVars:
       - key: GROQ_API_KEY
-        sync: false # You will set this in the Render Dashboard
+        sync: false
       - key: GOOGLE_DRIVE_FOLDER_ID
-        sync: false # You will set this in the Render Dashboard
+        sync: false
       - key: GOOGLE_APPLICATION_CREDENTIALS
         value: "credentials.json"
       - key: PYTHON_VERSION
         value: 3.12.0
-    disk:
-      name: faiss-storage
-      mountPath: /opt/render/project/src/backend/faiss_index
-      sizeGB: 1
+    # Disk removed to keep it 100% free. 
+    # Note: Documents must be re-synced if the server restarts.
