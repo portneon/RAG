@@ -89,8 +89,6 @@ function App() {
             </div>
           </div>
 
-          {/* Sync Section Hidden to keep UI clean - Logic still exists in handleSync */}
-          {/* 
           <div className="space-y-6">
             <div>
               <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Sync Source</label>
@@ -113,7 +111,6 @@ function App() {
               </div>
             </div>
           </div>
-          */}
         </div>
 
         <div className="mt-auto p-6 border-t border-white/5 space-y-4">
