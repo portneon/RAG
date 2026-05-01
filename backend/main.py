@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
@@ -10,23 +11,19 @@ app = FastAPI(title="Highwatch AI RAG System API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins (change this to specific domains in production)
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods (GET, POST, OPTIONS, etc.)
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.get("/")
 async def root():
-    return {
-        "message": "Welcome to the Highwatch AI RAG API! Please use the /docs endpoint to interact with the API.",
-        "documentation_url": "http://127.0.0.1:8000/docs"
-    }
+    return {"message": "Highwatch AI RAG API is live!"}
 
-app.include_router(router)
+app.include_router(router, prefix="/api")
 
 if __name__ == "__main__":
     import uvicorn
-    import os
-    port = int(os.getenv("PORT", 8000))
+    port = int(os.environ.get("PORT", 10000))
     uvicorn.run(app, host="0.0.0.0", port=port)
